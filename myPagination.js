@@ -8,7 +8,21 @@ function myPagination(_ref) {
         showSkipInputFlag = _ref.showSkipInputFlag,
         pageAmount = _ref.pageAmount,
         dataTotal = _ref.dataTotal;
-
+    if(!pageSize){
+        pageSize = 0
+    }
+    if(!pageSize){
+        pageSize = 0
+    }
+    if(!pageTotal){
+        pageTotal = 1
+    }
+    if(!pageAmount){
+        pageAmount = 0
+    }
+    if(!dataTotal){
+        dataTotal = 0
+    }
     this.pageSize = pageSize || 5; //分页个数
     this.pageTotal = pageTotal; //总共多少页
     this.pageAmount = pageAmount; //每页多少条
@@ -19,6 +33,9 @@ function myPagination(_ref) {
     this.getPage = getPage;
     this.showPageTotalFlag = showPageTotalFlag || false; //是否显示数据统计
     this.showSkipInputFlag = showSkipInputFlag || false; //是否支持跳转
+    // if(dataTotal !==0){
+    //     this.init();
+    // }
     this.init();
 };
 
@@ -69,12 +86,15 @@ myPagination.prototype = {
         var li = document.createElement('li');
         li.innerHTML = '首页';
         this.ul.appendChild(li);
-        li.onclick = function () {
-            var val = parseInt(1);
-            that.curPage = val;
-            that.getPage(that.curPage);
-            that.init();
-        };
+        if(that.dataTotal !==0){
+            li.onclick = function () {
+                var val = parseInt(1);
+                that.curPage = val;
+                that.getPage(that.curPage);
+                that.init();
+            };
+        }
+
     },
     //上一页
     lastPage: function lastPage() {
@@ -115,10 +135,10 @@ myPagination.prototype = {
                 }
             }
         } else {
-            console.error('当前页数不能大于总页数');
+            console.log('当前页数不能大于总页数');
         }
         if (!this.pageSize) {
-            console.error('显示页数不能为空或者0');
+            console.log('显示页数不能为空或者0');
         }
         return pag;
     },
@@ -144,13 +164,16 @@ myPagination.prototype = {
         var li = document.createElement('li');
         li.innerHTML = '尾页';
         this.ul.appendChild(li);
-        li.onclick = function () {
-            var yyfinalPage = that.pageTotal;
-            var val = parseInt(yyfinalPage);
-            that.curPage = val;
-            that.getPage(that.curPage);
-            that.init();
-        };
+        if(that.dataTotal !==0){
+            li.onclick = function () {
+                var yyfinalPage = that.pageTotal;
+                var val = parseInt(yyfinalPage);
+                that.curPage = val;
+                that.getPage(that.curPage);
+                that.init();
+            };
+        }
+
     },
     //是否支持跳转
     showSkipInput: function showSkipInput() {
@@ -166,11 +189,11 @@ myPagination.prototype = {
             var oEvent = e || event;
             if (oEvent.keyCode == '13') {
                 var val = parseInt(oEvent.target.value);
-                if (typeof val === 'number' && val <= that.pageTotal) {
+                if (typeof val === 'number' && val <= that.pageTotal && val>0) {
                     that.curPage = val;
                     that.getPage(that.curPage);
                 }else{
-                    alert("跳转页数不能大于总页数 !")
+                    alert("请输入正确的页码")
                 }
                 that.init();
             }

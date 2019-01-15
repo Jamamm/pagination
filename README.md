@@ -1,5 +1,5 @@
 # pagination
-这是一个原生JS写的分页插件
+这是一个原生JS写的分页插件  [预览链接](https://jamccc.github.io/pagination/ "预览链接")
 
 使用方法：
 ```
@@ -18,4 +18,3 @@ new myPagination({
         }
     })
 ```
-[预览链接](https://jamamm.github.io/pagination/index "预览链接")

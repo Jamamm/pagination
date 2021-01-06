@@ -1,41 +1,26 @@
 function myPagination(_ref) {
-    var pageSize = _ref.pageSize,
-        pageTotal = _ref.pageTotal,
-        curPage = _ref.curPage,
-        id = _ref.id,
-        getPage = _ref.getPage,
-        showPageTotalFlag = _ref.showPageTotalFlag,
-        showSkipInputFlag = _ref.showSkipInputFlag,
-        pageAmount = _ref.pageAmount,
-        dataTotal = _ref.dataTotal;
-    if(!pageSize){
-        pageSize = 0
-    }
-    if(!pageSize){
-        pageSize = 0
-    }
-    if(!pageTotal){
-        pageTotal = 1
-    }
-    if(!pageAmount){
-        pageAmount = 0
-    }
-    if(!dataTotal){
-        dataTotal = 0
-    }
+    let {
+        id,
+        pageSize,
+        pageTotal,
+        curPage,
+        getPage,
+        showPageTotalFlag,
+        showSkipInputFlag,
+        pageAmount,
+        dataTotal
+    } = _ref
+
     this.pageSize = pageSize || 5; //分页个数
-    this.pageTotal = pageTotal; //总共多少页
-    this.pageAmount = pageAmount; //每页多少条
-    this.dataTotal = dataTotal; //总共多少数据
+    this.pageTotal = pageTotal || 1; //总共多少页
+    this.pageAmount = pageAmount || 0; //每页多少条
+    this.dataTotal = dataTotal || 0; //总共多少数据
     this.curPage = curPage || 1; //初始页码
     this.ul = document.createElement('ul');
     this.id = id;
     this.getPage = getPage;
     this.showPageTotalFlag = showPageTotalFlag || false; //是否显示数据统计
     this.showSkipInputFlag = showSkipInputFlag || false; //是否支持跳转
-    // if(dataTotal !==0){
-    //     this.init();
-    // }
     this.init();
 };
 
@@ -86,7 +71,7 @@ myPagination.prototype = {
         var li = document.createElement('li');
         li.innerHTML = '首页';
         this.ul.appendChild(li);
-        if(that.dataTotal !==0){
+        if (that.dataTotal !== 0) {
             li.onclick = function () {
                 var val = parseInt(1);
                 that.curPage = val;
@@ -164,7 +149,7 @@ myPagination.prototype = {
         var li = document.createElement('li');
         li.innerHTML = '尾页';
         this.ul.appendChild(li);
-        if(that.dataTotal !==0){
+        if (that.dataTotal !== 0) {
             li.onclick = function () {
                 var yyfinalPage = that.pageTotal;
                 var val = parseInt(yyfinalPage);
@@ -184,15 +169,15 @@ myPagination.prototype = {
         span1.innerHTML = '跳转到';
         li.appendChild(span1);
         var input = document.createElement('input');
-        input.setAttribute("type","number");
+        input.setAttribute("type", "number");
         input.onkeydown = function (e) {
             var oEvent = e || event;
             if (oEvent.keyCode == '13') {
                 var val = parseInt(oEvent.target.value);
-                if (typeof val === 'number' && val <= that.pageTotal && val>0) {
+                if (typeof val === 'number' && val <= that.pageTotal && val > 0) {
                     that.curPage = val;
                     that.getPage(that.curPage);
-                }else{
+                } else {
                     alert("请输入正确的页码")
                 }
                 that.init();
